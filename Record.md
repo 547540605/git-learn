@@ -1,5 +1,5 @@
-- # 问题：
-  我在Windows上项目更新了，push到了GitHub，现在我来到我的Mac上，也是同一个项目，我要怎么知道我本地的仓库中的这个项目和GitHub上的最新更新的项目有啥区别呢，知道后我要更新到一样的最新的版本，怎么搞？
+- # 问题:我在Windows上项目更新了，push到了GitHub，现在我来到我的Mac上，也是同一个项目，我要怎么知道我本地的仓库中的这个项目和GitHub上的最新更新的项目有啥区别呢，知道后我要更新到一样的最新的版本，怎么搞？
+
 - # 回答：
   在Mac上，你可以使用Git命令来检查本地仓库和GitHub上最新版本之间的差异，并更新本地仓库到最新版本。以下是具体步骤：
 
@@ -47,8 +47,7 @@ git pull origin main
 ```
 请确保你已经在Mac上安装了Git，并且已经配置了GitHub的SSH或HTTPS访问。如果你还没有配置，可以参考GitHub的官方文档进行配置。
 
-- # 问题：
-  上面你给的git pull origin main后面的origin main是啥意思？
+- # 问题:上面你给的git pull origin main后面的origin main是啥意思？
 - # 回答：
   在 `git pull origin main` 命令中，`origin` 和 `main` 分别代表两个不同的概念：
 

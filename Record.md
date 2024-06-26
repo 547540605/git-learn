@@ -67,3 +67,102 @@ git pull origin main
 ```sh
 git pull upstream master
 ```
+- # 问题：有一个新的项目要上传到GitHub，用GitHub管理，现在我在工程目录下git init,然后默认分支名是master，我想改为main，再push到GitHub
+- # 回答：
+要将默认分支名从 `master` 改为 `main`，并将其推送到 GitHub，你可以按照以下步骤操作：
+
+1. **初始化 Git 仓库**：
+   ```sh
+   git init
+   ```
+
+2. **创建并切换到 `main` 分支**：
+   ```sh
+   git checkout -b main
+   ```
+
+3. **添加文件并提交**：
+   ```sh
+   git add .
+   git commit -m "Initial commit"
+   ```
+
+4. **在 GitHub 上创建一个新的仓库**：
+   - 登录到你的 GitHub 账户。
+   - 点击右上角的 `+` 号，选择 `New repository`。
+   - 填写仓库名称和其他信息，然后点击 `Create repository`。
+
+5. **将本地仓库与 GitHub 仓库关联**：
+   ```sh
+   git remote add origin https://github.com/your-username/your-repo.git
+   ```
+
+6. **推送 `main` 分支到 GitHub**：
+   ```sh
+   git push -u origin main
+   ```
+
+完整的步骤如下：
+
+```sh
+# 初始化 Git 仓库
+git init
+
+# 创建并切换到 main 分支
+git checkout -b main
+
+# 添加文件并提交
+git add .
+git commit -m "Initial commit"
+
+# 将本地仓库与 GitHub 仓库关联
+git remote add origin https://github.com/your-username/your-repo.git
+
+# 推送 main 分支到 GitHub
+git push -u origin main
+```
+
+这样，你的默认分支名就会是 `main`，并且你的代码也会被推送到 GitHub 上。
+- # 问题：push的时候遇到问题。! [rejected]          main -> main (non-fast-forward)
+错误：无法推送一些引用到 'github.com:547540605/NEDAssistant-visionos.git'
+提示： 更新被拒绝，因为您当前分支的最新提交落后于其对应的远程分支。
+提示： 如果您希望先与远程变更合并，请在推送前执行 'git pull'。
+提示： 详见 'git push --help' 中的 'Note about fast-forwards' 小节。
+- # 回答：
+这个错误提示表明你尝试推送的分支 `main` 在远程仓库中已经有了新的提交，而你的本地分支没有这些新的提交。为了解决这个问题，你可以按照以下步骤操作：
+
+1. **拉取远程分支的最新更改**：
+   ```sh
+   git pull origin main
+   ```
+
+2. **解决可能的合并冲突**（如果有的话）：
+   - 如果 `git pull` 命令提示有冲突，你需要手动解决这些冲突。
+   - 解决冲突后，使用 `git add` 命令将解决冲突后的文件标记为已解决。
+   - 然后提交这些更改：
+     ```sh
+     git commit -m "Resolve merge conflicts"
+     ```
+
+3. **再次推送本地分支到远程仓库**：
+   ```sh
+   git push origin main
+   ```
+
+完整的步骤如下：
+
+```sh
+# 拉取远程分支的最新更改
+git pull origin main
+
+# 解决可能的合并冲突（如果有的话）
+# 解决冲突后，使用 git add 命令将解决冲突后的文件标记为已解决
+# 然后提交这些更改
+git commit -m "Resolve merge conflicts"
+
+# 再次推送本地分支到远程仓库
+git push origin main
+```
+
+这样，你的本地分支就会包含远程分支的最新更改，并且可以成功推送到远程仓库。
+

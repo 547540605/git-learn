@@ -266,3 +266,48 @@ git push -u origin main
 ```
 
 这样，你的本地仓库就会与新的远程 GitHub 仓库同步，并且所有更改都会正确地推送到新的仓库名称下。
+- # 问题:我想知道现在我有两个unity3d项目，他们的共同点是共用其中一个.cs脚本文件，我希望他们能同步更新，有啥办法吗，用git
+- # 回答:
+要实现两个 Unity3D 项目共享一个 `.cs` 脚本文件并同步更新，可以使用 Git 的子模块（submodule）功能。子模块允许你在一个 Git 仓库中包含另一个 Git 仓库，并且可以独立地管理这些子模块的版本。
+
+以下是具体步骤：
+
+1. **创建一个共享脚本的仓库**：
+   - 如果你还没有一个共享脚本的仓库，首先需要在 GitHub 或其他 Git 托管服务上创建一个新的仓库。
+   - 将共享的 `.cs` 脚本文件添加到这个新仓库中，并推送到远程仓库。
+
+2. **在两个 Unity3D 项目中添加子模块**：
+   - 打开终端或命令行工具，导航到第一个 Unity3D 项目的根目录。
+   - 使用以下命令添加子模块：
+     ```sh
+     git submodule add https://github.com/your-username/shared-script-repo.git Assets/Scripts/Shared
+     ```
+   - 这会在 `Assets/Scripts/Shared` 目录下添加共享脚本仓库，并创建一个 `.gitmodules` 文件来记录子模块的信息。
+
+   - 对第二个 Unity3D 项目重复上述步骤：
+     ```sh
+     git submodule add https://github.com/your-username/shared-script-repo.git Assets/Scripts/Shared
+     ```
+
+3. **初始化并更新子模块**：
+   - 在每个项目的根目录下，运行以下命令来初始化并更新子模块：
+     ```sh
+     git submodule update --init --recursive
+     ```
+
+4. **同步更新共享脚本**：
+   - 当你更新了共享脚本仓库中的 `.cs` 文件并推送到远程仓库后，在两个 Unity3D 项目中分别运行以下命令来更新子模块：
+     ```sh
+     git submodule update --remote
+     ```
+   - 这会从远程仓库拉取最新的共享脚本文件。
+
+5. **提交子模块的更改**：
+   - 更新子模块后，你需要提交子模块的更改到主项目中：
+     ```sh
+     git add .gitmodules Assets/Scripts/Shared
+     git commit -m "Update shared script submodule"
+     git push
+     ```
+
+通过这种方式，你可以确保两个 Unity3D 项目中的共享脚本文件始终保持同步。每次更新共享脚本仓库后，只需在两个项目中运行 `git submodule update --remote` 即可同步更新。

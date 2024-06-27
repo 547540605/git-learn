@@ -311,3 +311,158 @@ git push -u origin main
      ```
 
 通过这种方式，你可以确保两个 Unity3D 项目中的共享脚本文件始终保持同步。每次更新共享脚本仓库后，只需在两个项目中运行 `git submodule update --remote` 即可同步更新。
+- # 问题:git status报这个头指针分离自 4ad7d96 无文件要提交，干净的工作
+- # 回答:
+当你在 Git 中看到 `头指针分离自 4ad7d96` 的提示时，这意味着你当前不在任何分支上，而是在一个特定的提交（commit）上。这种情况通常发生在以下几种情况：
+
+1. **查看历史提交**：你使用 `git checkout` 命令切换到了一个特定的提交，而不是一个分支。
+2. **临时工作**：你可能在进行一些临时工作，不想立即创建一个新的分支。
+
+如果你在一个分离的头指针状态下工作，并且没有文件要提交，这意味着你的工作目录是干净的，没有未提交的更改。
+
+### 处理分离头指针状态
+
+如果你希望继续在这个提交上工作，并保存你的更改，你可以创建一个新的分支：
+
+```sh
+git checkout -b new-branch-name
+```
+
+这将基于当前的提交创建一个新的分支，并切换到该分支。
+
+如果你只是临时查看某个提交，并且不打算保存任何更改，你可以简单地切换回原来的分支：
+
+```sh
+git checkout <branch-name>
+```
+
+### 示例
+
+假设你当前在分离头指针状态下，并且希望创建一个新的分支：
+
+```sh
+git checkout -b feature-branch
+```
+
+这将创建一个名为 `feature-branch` 的新分支，并切换到该分支。
+
+如果你只是临时查看某个提交，并且希望回到原来的分支：
+
+```sh
+git checkout main
+```
+
+这将切换回 `main` 分支。
+
+通过这些步骤，你可以有效地处理分离头指针状态，并根据需要创建新的分支或切换回原来的分支。
+- # 问题:先查看当前有几个子项目，再删除里面的其中一个
+- # 回答:
+好的，我明白了。你可以按照以下步骤来查看和删除 Git 项目中的子模块：
+
+### 查看子模块
+
+1. **查看 `.gitmodules` 文件**：
+   ```sh
+   cat .gitmodules
+   ```
+
+2. **使用 `git submodule` 命令**：
+   ```sh
+   git submodule status
+   ```
+
+3. **查看 `.git/config` 文件**：
+   ```sh
+   cat .git/config
+   ```
+
+4. **使用 `git submodule foreach` 命令**：
+   ```sh
+   git submodule foreach --quiet 'echo $path' | wc -l
+   ```
+
+### 删除子模块
+
+假设你要删除的子模块路径是 `path/to/submodule`，你可以按照以下步骤进行操作：
+
+1. **删除子模块的目录**：
+   ```sh
+   rm -rf path/to/submodule
+   ```
+
+2. **更新 `.gitmodules` 文件**：
+   编辑 `.gitmodules` 文件，删除与你要删除的子模块相关的部分。
+   ```sh
+   nano .gitmodules
+   ```
+   找到并删除以下内容：
+   ```ini
+   [submodule "path/to/submodule"]
+       path = path/to/submodule
+       url = https://url/to/submodule.git
+   ```
+
+3. **更新 `.git/config` 文件**：
+   编辑 `.git/config` 文件，删除与你要删除的子模块相关的部分。
+   ```sh
+   nano .git/config
+   ```
+   找到并删除以下内容：
+   ```ini
+   [submodule "path/to/submodule"]
+       url = https://url/to/submodule.git
+   ```
+
+4. **删除子模块的 Git 目录**：
+   ```sh
+   rm -rf .git/modules/path/to/submodule
+   ```
+
+5. **更新 Git 索引**：
+   ```sh
+   git rm --cached path/to/submodule
+   ```
+
+6. **提交更改**：
+   ```sh
+   git add .gitmodules
+   git commit -m "Removed submodule path/to/submodule"
+   ```
+
+通过这些步骤，你可以先查看 Git 项目中的子模块，然后删除指定的子模块。
+- # 问题:我直接用git commit，会用vim编辑器弹出，然后我要怎么输入提交信息
+- # 回答:
+当你使用 `git commit` 命令时，如果 Git 配置的默认编辑器是 Vim，你会看到一个 Vim 编辑器界面。以下是如何在 Vim 中输入提交信息的步骤：
+
+1. **打开 Vim 编辑器**：
+   - 当你运行 `git commit` 时，Vim 编辑器会自动打开。
+
+2. **进入插入模式**：
+   - 按 `i` 键进入插入模式。此时，你可以开始输入文本。
+
+3. **输入提交信息**：
+   - 在编辑器的第一行输入你的提交信息。例如：
+     ```
+     Remove NEDSharedScripts submodule
+     ```
+
+4. **退出插入模式**：
+   - 按 `Esc` 键退出插入模式。
+
+5. **保存并退出**：
+   - 输入 `:wq` 并按 `Enter` 键保存并退出 Vim。`:wq` 是 Vim 的命令，表示写入（保存）并退出。
+
+如果你在 Vim 中不小心进入了错误的模式或者想要放弃当前的编辑，可以按 `Esc` 键确保你在正常模式下，然后输入 `:q!` 并按 `Enter` 键放弃更改并退出。
+
+以下是具体步骤的示例：
+
+1. 运行 `git commit`。
+2. 按 `i` 键进入插入模式。
+3. 输入提交信息：
+   ```
+   Remove NEDSharedScripts submodule
+   ```
+4. 按 `Esc` 键退出插入模式。
+5. 输入 `:wq` 并按 `Enter` 键保存并退出 Vim。
+
+这样，你就成功地提交了删除 `NEDSharedScripts` 子模块的更改。

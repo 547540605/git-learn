@@ -551,3 +551,64 @@ git checkout main
 这样做的原因是，子模块的更新会导致子模块的当前提交哈希值发生变化。这个哈希值是主项目用来跟踪子模块版本的依据。如果你只在子模块目录下更新并推送，而没有在主项目中更新子模块引用，那么其他开发者在使用主项目时，可能会获取到旧版本的子模块。
 
 通过在主项目的根目录下更新子模块引用并提交更改，你可以确保其他开发者在使用主项目时，能够获取到你更新后的子模块版本。
+- # 问题:我在本地有一个unity项目，然后我在github上新建了一个项目，现在我要把这个远程项目和这个本地项目关联起来，怎么搞
+- # 回答:
+  要将本地的Unity项目与GitHub上的远程项目关联起来，可以按照以下步骤进行操作：
+
+1. **初始化本地Git仓库**（如果还没有初始化）：
+   打开终端或命令提示符，导航到你的Unity项目目录，然后运行以下命令：
+   ```bash
+   git init
+   ```
+
+2. **添加远程仓库**：
+   假设你的GitHub仓库地址是 `https://github.com/yourusername/your-repo.git`，运行以下命令将远程仓库添加到本地：
+   ```bash
+   git remote add origin https://github.com/yourusername/your-repo.git
+   ```
+
+3. **检查远程仓库**：
+   运行以下命令来确认远程仓库已经添加成功：
+   ```bash
+   git remote -v
+   ```
+4. **拉取远程仓库文件**:
+   ```bash
+   git pull origin main
+   ```
+5. **切换到main分支**:
+   ```bash
+   git checkout -b main
+   ```
+6. **添加文件到暂存区**：
+   将所有文件添加到暂存区：
+   ```bash
+   git add .
+   ```
+
+7. **提交文件到本地仓库**：
+   提交文件并添加提交信息：
+   ```bash
+   git commit -m "Initial commit"
+   ```
+8. **推送到远程仓库**：
+   将本地仓库的提交推送到远程仓库：
+   ```bash
+   git push -u origin master
+   ```
+   如果你的默认分支是 `main` 而不是 `master`，请使用：
+   ```bash
+   git push -u origin main
+   ```
+
+9. **设置上游分支**（可选）：
+   如果你希望以后可以直接使用 `git push` 和 `git pull` 而不需要指定分支，可以设置上游分支：
+   ```bash
+   git branch --set-upstream-to=origin/master master
+   ```
+   或者：
+   ```bash
+   git branch --set-upstream-to=origin/main main
+   ```
+
+完成以上步骤后，你的本地Unity项目就已经成功关联到GitHub上的远程项目了。你可以随时使用 `git push` 和 `git pull` 来同步你的代码。

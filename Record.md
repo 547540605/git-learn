@@ -531,7 +531,8 @@ git checkout main
 
 总结来说，子模块的更新导致主项目中的子模块引用发生变化，是因为子模块的当前提交哈希值发生了变化，这个哈希值是主项目用来跟踪子模块版本的依据。
 - ## 问题2:那就是我在项目内更新了子模块并推送还不够，最好是到项目的根目录下，更新子模块引用，是这个意思吗
-- ## 问题2:是的，你的理解是正确的。当你在项目内更新了子模块并推送后，确实需要在项目的根目录下更新子模块引用。具体来说，你需要在主项目的根目录下执行以下步骤：
+- ## 回答2:
+  是的，你的理解是正确的。当你在项目内更新了子模块并推送后，确实需要在项目的根目录下更新子模块引用。具体来说，你需要在主项目的根目录下执行以下步骤：
 
 1. **更新子模块引用**：
    ```sh
@@ -612,3 +613,74 @@ git checkout main
    ```
 
 完成以上步骤后，你的本地Unity项目就已经成功关联到GitHub上的远程项目了。你可以随时使用 `git push` 和 `git pull` 来同步你的代码。
+- # 问题:git checkou -b main中的-b是啥意思
+- # 回答:
+  `git checkout -b main` 命令中的 `-b` 选项表示创建一个新的分支并切换到该分支。具体来说，`-b` 是 `--branch` 的缩写，用于指定要创建的新分支的名称。
+
+所以，`git checkout -b main` 命令的作用是：
+1. 创建一个名为 `main` 的新分支。
+2. 切换到这个新创建的 `main` 分支。
+
+如果你已经有一个名为 `main` 的分支，这个命令会直接切换到该分支，而不会创建新的分支。
+
+以下是一些相关的命令示例：
+
+- 创建并切换到一个名为 `feature-branch` 的新分支：
+  ```bash
+  git checkout -b feature-branch
+  ```
+
+- 切换到一个已经存在的分支 `existing-branch`：
+  ```bash
+  git checkout existing-branch
+  ```
+
+- 创建一个新分支 `new-branch` 并切换到该分支，同时指定新分支的起点为 `origin/main`：
+  ```bash
+  git checkout -b new-branch origin/main
+  ```
+
+希望这些解释对你有所帮助！
+- # 问题:
+  那删除一个已有分支怎么搞
+- # 回答:
+要删除一个已有的分支，可以使用 `git branch -d` 命令。以下是具体步骤：
+
+1. **切换到其他分支**（如果当前分支是要删除的分支）：
+   ```bash
+   git checkout main
+   ```
+   或者切换到任何其他分支。
+
+2. **删除本地分支**：
+   ```bash
+   git branch -d branch-name
+   ```
+   这里的 `branch-name` 是要删除的分支的名称。
+
+   例如，要删除名为 `feature-branch` 的分支，可以运行：
+   ```bash
+   git branch -d feature-branch
+   ```
+
+3. **强制删除本地分支**（如果分支未完全合并）：
+   如果分支中的更改未完全合并到其他分支，`git branch -d` 会拒绝删除该分支。你可以使用 `-D` 选项强制删除：
+   ```bash
+   git branch -D branch-name
+   ```
+   例如：
+   ```bash
+   git branch -D feature-branch
+   ```
+
+4. **删除远程分支**：
+   要删除远程分支，可以使用 `git push` 命令，并指定 `--delete` 选项：
+   ```bash
+   git push origin --delete branch-name
+   ```
+   例如，要删除名为 `feature-branch` 的远程分支，可以运行：
+   ```bash
+   git push origin --delete feature-branch
+   ```
+
+完成这些步骤后，指定的分支将被删除。请注意，删除分支会永久删除该分支上的所有提交，除非这些提交已经合并到其他分支中。因此，在删除分支之前，请确保你不再需要该分支上的任何更改。
